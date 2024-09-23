@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+   web:
+       build: .
+       command: bash -c "python src/split.py && python src/train.py && python src/predict.py -m LOG_REG -t func && coverage run -m pytest src/unit_tests -W ignore::DeprecationWarning && coverage report -m"
+       ports:
+           - 5000:5000
+       image: aruko/firstdockerfile:latest

@@ -1,0 +1,22 @@
+{
+  "X": [
+    {
+      "fixed acidity": 7.0,
+      "volatile acidity": 0.17,
+      "citric acid": 0.74,
+      "residual sugar": 12.8,
+      "chlorides": 0.045,
+      "free sulfur dioxide": 24.0,
+      "total sulfur dioxide": 126.0,
+      "density": 0.9942,
+      "pH": 3.26,
+      "sulphates": 0.38,
+      "alcohol": 12.2
+    }
+  ],
+  "y": [
+    {
+      "quality": 8
+    }
+  ]
+}

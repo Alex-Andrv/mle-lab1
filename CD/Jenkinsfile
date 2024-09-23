@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Pull image') {
+            steps {
+                echo 'Updating docker image'
+                sh 'sudo docker pull aruko/firstdockerfile:latest'
+            }
+        }
+        
+        stage('Run container') {
+            steps {
+                sh 'sudo rm -r -f *'
+                sh 'ls'
+                sh 'curl https://raw.githubusercontent.com/Better-than-Elon/mle-templete_1_pipelines/main/CD/docker-compose.yml -o docker-compose.yml'
+                sh 'ls'
+                sh 'sudo docker compose up'
+            }
+        }
+    }
+    post {
+        always {
+            sh 'sudo docker compose down 2>null'
+            sh 'sudo docker logout docker.io'
+        }
+    }
+}

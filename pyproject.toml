@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "my-mle-template"
+version = "0.1.0"
+description = ""
+authors = ["Better-than-Elon <arkadyartemenko@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+coverage = "6.5.0"
+dvc = "2.28.0"
+numpy = "^1.26.4"
+pandas = "^2.2.2"
+scikit-learn = "1.1.1"
+pyyaml = "5.3.1"
+pytest = "^8.1.1"
+flask = "^3.0.3"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
