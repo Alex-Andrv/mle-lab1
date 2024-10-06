@@ -11,26 +11,28 @@ TEST_SIZE = 0.2
 SHOW_LOG = True
 
 
-class DataMaker():
+class DataMaker:
 
     def __init__(self) -> None:
         logger = Logger(SHOW_LOG)
         self.config = configparser.ConfigParser()
         self.log = logger.get_logger(__name__)
-        self.project_path = os.path.join(os.getcwd(), "data")
-        self.data_path = os.path.join(self.project_path, "Iris.csv")
-        self.X_path = os.path.join(self.project_path, "Iris_X.csv")
-        self.y_path = os.path.join(self.project_path, "Iris_y.csv")
-        self.train_path = [os.path.join(self.project_path, "Train_Iris_X.csv"), os.path.join(
-            self.project_path, "Train_Iris_y.csv")]
-        self.test_path = [os.path.join(self.project_path, "Test_Iris_X.csv"), os.path.join(
-            self.project_path, "Test_Iris_y.csv")]
+        self.data_path = os.path.join(os.getcwd(), "data")
+        self.raw_data_path = os.path.join(self.data_path, "raw", "penguins_lter.csv")
+        self.preprocess_dir = os.path.join(self.data_path, "preprocess")
+        self.X_path = os.path.join(self.preprocess_dir, "penguins_X.csv")
+        self.y_path = os.path.join(self.preprocess_dir, "penguins_y.csv")
+        self.train_path = [os.path.join(self.data_path, "Train_Penguins_X.csv"), os.path.join(
+            self.data_path, "Train_Penguins_y.csv")]
+        self.test_path = [os.path.join(self.data_path, "Test_Penguins_X.csv"), os.path.join(
+            self.data_path, "Test_Penguins_y.csv")]
         self.log.info("DataMaker is ready")
 
     def get_data(self) -> bool:
-        dataset = pd.read_csv(self.data_path)
-        X = pd.DataFrame(dataset.iloc[:, 1:5].values)
-        y = pd.DataFrame(dataset.iloc[:, 5:].values)
+        dataset = pd.read_csv(self.raw_data_path)
+        X = dataset.drop(columns='Species')
+        y = dataset['Species']
+
         X.to_csv(self.X_path, index=True)
         y.to_csv(self.y_path, index=True)
         if os.path.isfile(self.X_path) and os.path.isfile(self.y_path):
