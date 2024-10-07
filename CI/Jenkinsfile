@@ -48,12 +48,12 @@ pipeline {
                     try {
                         sh '''
                             cd mle-lab1
-                            /usr/local/bin/docker-compose build
+                            export PATH=$PATH:/usr/local/bin && /usr/local/bin/docker-compose build
                         '''
                     } finally {
                         sh '''
                             cd mle-lab1
-                            /usr/local/bin/docker-compose up -d
+                            export PATH=$PATH:/usr/local/bin && /usr/local/bin/docker-compose up -d
                         '''
                     }
                 }
