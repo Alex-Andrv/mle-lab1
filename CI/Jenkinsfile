@@ -66,7 +66,7 @@ pipeline {
                     sh '''
                         ls
                         export PATH=$PATH:/usr/local/bin
-                        containerId=$(/usr/local/bin/docker ps -qf "name=mle-template-web-1")
+                        containerId=$(/usr/local/bin/docker ps -qf "name=mle-lab1-penguin-app-1")
                         echo $containerId
                         if [ -z "$containerId" ]; then
                             echo "No container running"
