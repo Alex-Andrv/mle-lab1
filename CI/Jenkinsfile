@@ -64,7 +64,7 @@ pipeline {
             steps {
                 dir("mle-template") {
                     sh '''
-                        echo ls
+                        ls
                         export PATH=$PATH:/usr/local/bin
                         docker-compose up -d
                         containerId=$(/usr/local/bin/docker ps -qf "name=mle-template-web-1")
