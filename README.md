@@ -15,3 +15,7 @@ curl -X POST http://localhost:5001/predict -H "Content-Type: application/json" -
 
 
 brew services start jenkins-lts
+
+ngrok http http://localhost:8080
+
+cat /Users/aandreev/.jenkins/secrets/initialAdminPassword
