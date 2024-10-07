@@ -63,6 +63,7 @@ pipeline {
         stage('Checkout container logs') {
             steps {
                 dir("mle-template") {
+                    sh 'export PATH=$PATH:/usr/local/bin'
                     sh '''
                         docker-compose up -d
                         containerId=$(/usr/local/bin/docker ps -qf "name=mle-template-web-1")
