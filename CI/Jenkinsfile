@@ -34,6 +34,7 @@ pipeline {
 
         stage('Login') {
             steps {
+                sh 'export PATH=$PATH:/usr/local/bin && docker --version'
                 sh '''
                     echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
                 '''
