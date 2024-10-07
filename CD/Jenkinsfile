@@ -64,6 +64,7 @@ pipeline {
                     /usr/local/bin/docker stop mle-cd-template || true
                     /usr/local/bin/docker rm mle-cd-template || true
                     /usr/local/bin/docker logout
+                    echo "change"
                 '''
             }
         }
