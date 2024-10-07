@@ -66,7 +66,6 @@ pipeline {
                     sh '''
                         ls
                         export PATH=$PATH:/usr/local/bin
-                        docker-compose up -d
                         containerId=$(/usr/local/bin/docker ps -qf "name=mle-template-web-1")
                         echo $containerId
                         if [ -z "$containerId" ]; then
