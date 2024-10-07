@@ -2,47 +2,84 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDS=credentials('a930af01-7285-420d-b3b5-66a9b5dd7752')
+        DOCKERHUB_CREDS = credentials('a930af01-7285-420d-b3b5-66a9b5dd7752')
         LC_ALL = "en_US.UTF-8"
-        LANG    = "en_US.UTF-8"
+        LANG = "en_US.UTF-8"
         LANGUAGE = "en_US.UTF-8"
     }
 
-options {
+    options {
         timestamps()
         skipDefaultCheckout(true)
-	}
+    }
+
+    triggers {
+        // Запуск по расписанию: каждый день в 12:00
+        cron('H 12 * * *')
+
+        // Ручной запуск (по умолчанию это всегда возможно)
+    }
+
     stages {
 
-        stage('Login'){
-            steps{
-                //withCredentials([usernamePassword(credentialsId: 'mle-template', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]){
-                //bat 'chcp 65001 && echo %DOCKER_REGISTRY_PWD% | docker login -u %DOCKER_REGISTRY_USER% --password-stdin'}
-                //bat 'chcp 65001 && echo %DOCKERHUB_CREDS_PSW% | docker login -u %DOCKERHUB_CREDS_USR% --password-stdin'
-                bat 'docker login -u %DOCKERHUB_CREDS_USR% -p %DOCKERHUB_CREDS_PSW%'
+        stage('Login') {
+            steps {
+                script {
+                    // Логин в Docker Hub
+                    sh '''
+                        docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW
+                    '''
                 }
             }
+        }
 
-        stage('Pull image'){
-            steps{
-                bat '''
-                        docker pull sesh31/mle-lab2:latest
-                '''
+        stage('Pull image') {
+            steps {
+                script {
+                    // Пул последней версии образа
+                    sh '''
+                        docker pull sesh31/mle-lab1-penguin-app:latest
+                    '''
+                }
             }
         }
 
-        stage('Run container'){
-            steps{
-                bat '''
-                        docker run --name mle-template -p 80:5556 -d sesh31/mle-lab2:latest
-                '''
+        stage('Run container') {
+            steps {
+                script {
+                    // Запуск контейнера на порте 5001
+                    sh '''
+                        docker run --name mle-cd-template -p 5001:5001 -d sesh31/mle-lab1-penguin-app:latest
+                    '''
+                }
             }
         }
-	}
+
+        stage('Run Functional Tests') {
+            steps {
+                script {
+                    // Пример функционального тестирования
+                    // Вы можете здесь запускать тесты с использованием curl, pytest или другого инструмента
+                    sh '''
+                        sleep 10  # Даем время контейнеру стартовать
+                        curl -f http://localhost:5001/health || (echo "Healthcheck failed" && exit 1)
+                        echo "Functional tests passed!"
+                    '''
+                }
+            }
+        }
+    }
 
     post {
         always {
-            bat 'docker stop mle-template && docker logout'
+            script {
+                // Остановка контейнера и выход из Docker Hub
+                sh '''
+                    docker stop mle-cd-template || true
+                    docker rm mle-cd-template || true
+                    docker logout
+                '''
+            }
         }
     }
 }
