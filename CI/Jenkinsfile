@@ -81,7 +81,17 @@ pipeline {
                 '''
             }
         }
+         // Финальный этап для вызова CD pipeline
+        stage('Trigger CD Pipeline') {
+            steps {
+                script {
+                    // Запуск CD pipeline
+                    build job: 'CD', propagate: true
+                }
+            }
+        }
     }
+
 
     post {
         always {

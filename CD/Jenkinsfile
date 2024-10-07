@@ -21,13 +21,13 @@ pipeline {
     }
 
     stages {
-
+R
         stage('Login') {
             steps {
                 script {
                     // Логин в Docker Hub
                     sh '''
-                        docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW
+                        /usr/local/bin/docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW
                     '''
                 }
             }
@@ -38,7 +38,7 @@ pipeline {
                 script {
                     // Пул последней версии образа
                     sh '''
-                        docker pull sesh31/mle-lab1-penguin-app:latest
+                        /usr/local/bin/docker pull sesh31/mle-lab1-penguin-app:latest
                     '''
                 }
             }
@@ -49,7 +49,7 @@ pipeline {
                 script {
                     // Запуск контейнера на порте 5001
                     sh '''
-                        docker run --name mle-cd-template -p 5001:5001 -d sesh31/mle-lab1-penguin-app:latest
+                        /usr/local/bin/docker run --name mle-cd-template -p 5001:5001 -d sesh31/mle-lab1-penguin-app:latest
                     '''
                 }
             }
@@ -75,9 +75,9 @@ pipeline {
             script {
                 // Остановка контейнера и выход из Docker Hub
                 sh '''
-                    docker stop mle-cd-template || true
-                    docker rm mle-cd-template || true
-                    docker logout
+                    /usr/local/bin/docker stop mle-cd-template || true
+                    /usr/local/bin/docker rm mle-cd-template || true
+                    /usr/local/bin/docker logout
                 '''
             }
         }
