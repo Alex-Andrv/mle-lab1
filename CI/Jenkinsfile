@@ -66,7 +66,7 @@ pipeline {
                     sh '''
                         ls
                         export PATH=$PATH:/usr/local/bin
-                        containerId=$(/usr/local/bin/docker ps -qf "name=mle-lab1-penguin-app-1")
+                        containerId=$(/usr/local/bin/docker ps -qf "name=mle-lab1-penguin-app")
                         echo $containerId
 
                     '''
@@ -77,7 +77,7 @@ pipeline {
         stage('Push') {
             steps {
                 sh '''
-                    export PATH=$PATH:/usr/local/bin && /usr/local/bin/docker push sesh31/mle-lab2:latest
+                    export PATH=$PATH:/usr/local/bin && /usr/local/bin/docker push sesh31/mle-lab1-penguin-app:latest:latest
                 '''
             }
         }
