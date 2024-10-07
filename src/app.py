@@ -39,6 +39,7 @@ def predict():
     try:
         # Получение данных от клиента
         data = request.get_json()
+        print("chane")
 
         # Извлечение данных
         culmen_length = data['Culmen Length (mm)']
