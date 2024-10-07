@@ -59,6 +59,7 @@ pipeline {
 
     post {
         always {
+
             script {
                 // Остановка контейнера и выход из Docker Hub
                 sh '''
