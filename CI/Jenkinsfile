@@ -88,6 +88,7 @@ pipeline {
                             echo "No container running with the name mle-lab1-penguin-app"
                         fi
                     '''
+
                 }
             }
         }
