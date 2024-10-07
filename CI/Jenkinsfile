@@ -81,7 +81,7 @@ pipeline {
             steps {
                 dir("mle-template") {
                     sh '''
-                        docker-compose logs -t --tail 10
+                        export PATH=$PATH:/usr/local/bin && docker-compose logs -t --tail 10
                     '''
                 }
             }
@@ -90,7 +90,7 @@ pipeline {
         stage('Push') {
             steps {
                 sh '''
-                    /usr/local/bin/docker push sesh31/mle-lab2:latest
+                    export PATH=$PATH:/usr/local/bin && /usr/local/bin/docker push sesh31/mle-lab2:latest
                 '''
             }
         }
@@ -99,7 +99,7 @@ pipeline {
     post {
         always {
             sh '''
-                /usr/local/bin/docker logout
+                export PATH=$PATH:/usr/local/bin && /usr/local/bin/docker logout
             '''
         }
     }
