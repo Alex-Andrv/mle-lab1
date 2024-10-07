@@ -68,11 +68,7 @@ pipeline {
                         export PATH=$PATH:/usr/local/bin
                         containerId=$(/usr/local/bin/docker ps -qf "name=mle-lab1-penguin-app-1")
                         echo $containerId
-                        if [ -z "$containerId" ]; then
-                            echo "No container running"
-                        else
-                            /usr/local/bin/docker logs --tail 1000 -f $containerId
-                        fi
+
                     '''
                 }
             }
