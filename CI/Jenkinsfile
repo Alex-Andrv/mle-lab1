@@ -47,12 +47,12 @@ pipeline {
                 script {
                     try {
                         sh '''
-                            cd mle-template
+                            cd mle-lab1
                             docker-compose build
                         '''
                     } finally {
                         sh '''
-                            cd mle-template
+                            cd mle-lab1
                             docker-compose up -d
                         '''
                     }
