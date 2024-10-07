@@ -74,6 +74,24 @@ pipeline {
             }
         }
 
+        // Этап для остановки и удаления контейнера перед запуском CD pipeline
+        stage('Stop and Remove Docker Container') {
+            steps {
+                script {
+                    sh '''
+                        containerId=$(/usr/local/bin/docker ps -qf "name=mle-lab1-penguin-app")
+                        if [ ! -z "$containerId" ]; then
+                            /usr/local/bin/docker stop $containerId
+                            /usr/local/bin/docker rm $containerId
+                            echo "Container stopped and removed"
+                        else
+                            echo "No container running with the name mle-lab1-penguin-app"
+                        fi
+                    '''
+                }
+            }
+        }
+
         stage('Push') {
             steps {
                 sh '''
